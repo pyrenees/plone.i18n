@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 from plone.i18n.normalizer.interfaces import INormalizer
-from zope.interface import implements
+from zope.interface import implementer
 from plone.i18n.normalizer.base import mapUnicode
 
 # Turkish character mapping
@@ -9,6 +9,8 @@ mapping = {
     286 : 'G', 287 : 'g', 304 : 'I', 305 : 'i', 350 : 'S', 351 : 's'
 }
 
+
+@implementer(INormalizer)
 class Normalizer(object):
     """
     This normalizer can normalize any unicode string and returns a version
@@ -24,7 +26,6 @@ class Normalizer(object):
       >>> norm.normalize(u'\u011f')
       'g'
     """
-    implements(INormalizer)
 
     def normalize(self, text, locale=None, max_length=None):
         """

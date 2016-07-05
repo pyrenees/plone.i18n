@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 from plone.i18n.normalizer.interfaces import INormalizer
-from zope.interface import implements
+from zope.interface import implementer
 from plone.i18n.normalizer.base import mapUnicode
 
 # Ukrainian character mapping (according to BGN/PCGN romanization system)
@@ -41,6 +41,8 @@ mapping = {
     0x042f: u'YA', 0x044f: u'ya',
 }
 
+
+@implementer(INormalizer)
 class Normalizer(object):
     """
     This normalizer can normalize any unicode string and returns a version
@@ -56,7 +58,6 @@ class Normalizer(object):
       >>> norm.normalize(u'\u041f\u043b\u043e\u043d')
       'Plon'
     """
-    implements(INormalizer)
 
     def normalize(self, text, locale=None, max_length=None):
         """

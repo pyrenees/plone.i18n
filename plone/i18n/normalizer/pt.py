@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 from plone.i18n.normalizer.interfaces import INormalizer
-from zope.interface import implements
+from zope.interface import implementer
 from plone.i18n.normalizer.base import mapUnicode
 
 # Portuguese character mapping
@@ -21,6 +21,7 @@ mapping = {
 }
 
 
+@implementer(INormalizer)
 class Normalizer(object):
     """
     This normalizer can normalize any unicode string and returns a version
@@ -42,7 +43,6 @@ class Normalizer(object):
       >>> norm.normalize(u'\xe7')
       'ç'
     """
-    implements(INormalizer)
 
     def normalize(self, text, locale=None, max_length=None):
         """

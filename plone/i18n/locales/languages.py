@@ -4,12 +4,13 @@ from plone.i18n.locales.interfaces import IContentLanguageAvailability
 from plone.i18n.locales.interfaces import IMetadataLanguageAvailability
 from plone.i18n.locales.interfaces import ILanguageAvailability
 from zope.interface import implements
+from zope.interface import implementer
 
 
+@implementer(ILanguageAvailability)
 class LanguageAvailability(object):
     """A list of available languages.
     """
-    implements(ILanguageAvailability)
 
     def getAvailableLanguages(self, combined=False):
         """Return a sequence of language tags for available languages.
@@ -36,18 +37,20 @@ class LanguageAvailability(object):
         return [(code, languages[code][u'name']) for code in languages]
 
 
+@implementer(IContentLanguageAvailability)
 class ContentLanguageAvailability(LanguageAvailability):
     """A list of available content languages.
     """
-    implements(IContentLanguageAvailability)
+    pass
 
 contentlanguages = ContentLanguageAvailability()
 
 
+@implementer(IMetadataLanguageAvailability)
 class MetadataLanguageAvailability(LanguageAvailability):
     """A list of available metadata languages.
     """
-    implements(IMetadataLanguageAvailability)
+    pass
 
 metadatalanguages = MetadataLanguageAvailability()
 
@@ -246,14 +249,6 @@ u'za' : {u'native' : 'Zhuang', u'name' : 'Zhuang'},
 u'zh' : {u'native' : '中文', u'name' : 'Chinese',                                 u'flag' : u'/++resource++country-flags/cn.gif'},
 u'zu' : {u'native' : 'IsiZulu', u'name' : 'Zulu',                               u'flag' : u'/++resource++country-flags/za.gif'},
 }
-
-# convert the utf-8 encoded values to unicode
-for code in _languagelist:
-    value = _languagelist[code]
-    if u'name' in value:
-        value[u'name'] = unicode(value[u'name'], 'utf-8')
-    if u'native' in value:
-        value[u'native'] = unicode(value[u'native'], 'utf-8')
 
 _combinedlanguagelist = {
 u'ar-ae' : {u'name' : 'Arabic (United Arab Emirates)',                          u'flag' : u'/++resource++country-flags/ae.gif'},
@@ -484,10 +479,3 @@ u'zh-sg' : {u'name' : 'Chinese (Singapore)', u'native' : '简体中文(新加坡
 u'zh-tw' : {u'name' : 'Chinese (Taiwan)', u'native' : '繁體中文(臺灣)',               u'flag' : u'/++resource++country-flags/tw.gif'},
 }
 
-# convert the utf-8 encoded values to unicode
-for code in _combinedlanguagelist:
-    value = _combinedlanguagelist[code]
-    if u'name' in value:
-        value[u'name'] = unicode(value[u'name'], 'utf-8')
-    if u'native' in value:
-        value[u'native'] = unicode(value[u'native'], 'utf-8')

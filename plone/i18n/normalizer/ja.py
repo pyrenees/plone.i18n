@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 from plone.i18n.normalizer.interfaces import INormalizer
-from zope.interface import implements
+from zope.interface import implementer
 from plone.i18n.normalizer.base import allowed
 
 MAX_LENGTH = 6
@@ -30,6 +30,7 @@ def ja_normalize(text, max_length=MAX_LENGTH):
         return "".join(_gethashed(text, max_length))
 
 
+@implementer(INormalizer)
 class Normalizer(object):
     """
     This normalizer can normalize any unicode string and returns a version
@@ -63,7 +64,6 @@ class Normalizer(object):
       >>> len(normalized)
       8
     """
-    implements(INormalizer)
 
     def normalize(self, text, locale=None, max_length=MAX_LENGTH):
         """

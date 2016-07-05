@@ -1,31 +1,24 @@
-from zope.interface import implements
+from zope.interface import implementer
 from plone.i18n.interfaces import ILanguageUtility, INegotiateLanguage
 from zope.component import queryUtility
 from plone.i18n.locales.interfaces import ICountryAvailability
 from plone.i18n.locales.interfaces import IContentLanguageAvailability
 from plone.i18n.locales.interfaces import ICcTLDInformation
-from Products.SiteAccess.VirtualHostMonster import VirtualHostMonster
+# from Products.SiteAccess.VirtualHostMonster import VirtualHostMonster
 from ZODB.POSException import ConflictError
-from AccessControl import ClassSecurityInfo
 from zope.component.hooks import getSite
 from zope.component import getMultiAdapter
 from zope.component import getUtility
-from Products.CMFCore.interfaces import IDublinCore
-from zope.globalrequest import getRequest
+# from zope.globalrequest import getRequest
 from plone.registry.interfaces import IRegistry
-from Products.CMFPlone.interfaces import ILanguageSchema
 
 
 class LanguageBinding:
     """Helper which holding language infos in request."""
-    security = ClassSecurityInfo()
-    __allow_access_to_unprotected_subobjects__ = 1
 
     DEFAULT_LANGUAGE = None
     LANGUAGE = None
     LANGUAGE_LIST = []
-
-    security.declarePublic('getLanguageBindings')
 
     def getLanguageBindings(self):
         """Returns the bound languages.
@@ -66,8 +59,8 @@ def onRequest(object, event):
     return setLanguageBinding(request)
 
 
+@implementer(ILanguageUtility)
 class LanguageUtility(object):
-    implements(ILanguageUtility)
 
     # resources that must not use language specific URLs
     exclude_paths = frozenset((
@@ -286,10 +279,6 @@ class LanguageUtility(object):
                 next = obj.unrestrictedTraverse(name, None)
                 if next is None:
                     break
-                if isinstance(next, VirtualHostMonster):
-                    # next element is the VH subpath
-                    contentpath.pop()
-                    continue
                 obj = next
                 traversed.append(obj)
             for obj in reversed(traversed):
@@ -420,10 +409,10 @@ class LanguageUtility(object):
         """Returns the name for a country code."""
         return self.getAvailableCountries().get(countryCode, countryCode)
 
-    def isAnonymousUser(self):
-        from AccessControl import getSecurityManager
-        user = getSecurityManager().getUser()
-        return not user.has_role('Authenticated')
+    # def isAnonymousUser(self):
+    #     from AccessControl import getSecurityManager
+    #     user = getSecurityManager().getUser()
+    #     return not user.has_role('Authenticated')
 
     def showSelector(self):
         """Returns True if the selector viewlet should be shown."""

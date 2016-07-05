@@ -9,10 +9,10 @@
     <utility factory=".utility.LanguageUtility"/>
     <adapter for="* *" factory=".negotiate.negotiate.NegotiateLanguage"/>
 
-    <subscriber
+<!--     <subscriber
        for="Products.CMFCore.interfaces.ISiteRoot
             zope.traversing.interfaces.IBeforeTraverseEvent"
        handler=".utility.onRequest"
        />
-
+ -->
 </configure>

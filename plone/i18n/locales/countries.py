@@ -2,12 +2,13 @@
 
 from plone.i18n.locales.interfaces import ICountryAvailability
 from zope.interface import implements
+from zope.interface import implementer
 
 
+@implementer(ICountryAvailability)
 class CountryAvailability(object):
     """A list of available coutries.
     """
-    implements(ICountryAvailability)
 
     def getAvailableCountries(self):
         """Return a sequence of country tags for available countries.
@@ -292,4 +293,4 @@ u'xk' : {u'name' : 'Kosovo', u'flag' : u'/++resource++country-flags/xk.gif'},
 for code in _countrylist:
     value = _countrylist[code]
     if u'name' in value:
-        value[u'name'] = unicode(value[u'name'], 'utf-8')
+        value[u'name'] = value[u'name']

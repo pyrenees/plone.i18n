@@ -148,7 +148,7 @@
       component=".es.normalizer"
       permission="zope.Public" />
 
-  <adapter
+<!--   <adapter
       for="zope.publisher.interfaces.http.IHTTPRequest"
       provides=".interfaces.IUserPreferredFileNameNormalizer"
       factory=".adapters.UserPreferredFileNameNormalizer"
@@ -159,5 +159,5 @@
       provides=".interfaces.IUserPreferredURLNormalizer"
       factory=".adapters.UserPreferredURLNormalizer"
       />
-
+ -->
 </configure>
